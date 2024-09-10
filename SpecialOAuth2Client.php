@@ -136,14 +136,14 @@ class SpecialOAuth2Client extends SpecialPage {
 	}
 
 	private function _default(){
-        global $wgOAuth2Client, $wgOut, $wgScriptPath, $wgExtensionAssetsPath;
+		global $wgOAuth2Client, $wgOut, $wgScriptPath, $wgExtensionAssetsPath;
 		$service_name = ( isset( $wgOAuth2Client['configuration']['service_name'] ) && 0 < strlen( $wgOAuth2Client['configuration']['service_name'] ) ? $wgOAuth2Client['configuration']['service_name'] : 'OAuth2' );
 
 		$wgOut->setPagetitle( wfMessage( 'oauth2client-login-header', $service_name)->text() );
-        $user = RequestContext::getMain()->getUser();
-        if ( !$user->isRegistered() ) {
+		$user = RequestContext::getMain()->getUser();
+		if ( !$user->isRegistered() ) {
 			$wgOut->addWikiMsg( 'oauth2client-you-can-login-to-this-wiki-with-oauth2', $service_name );
-            $wgOut->addWikiMsg( 'oauth2client-login-with-oauth2', $this->getPageTitle('redirect')->getPrefixedURL(), $service_name );
+			$wgOut->addWikiMsg( 'oauth2client-login-with-oauth2', $this->getPageTitle('redirect')->getPrefixedURL(), $service_name );
 
 		} else {
 			$wgOut->addWikiMsg( 'oauth2client-youre-already-loggedin' );
@@ -167,9 +167,7 @@ class SpecialOAuth2Client extends SpecialPage {
 			isset($wgOAuth2Client['configuration']['authz_callback'])
 			&& false === $wgOAuth2Client['configuration']['authz_callback']($response)
 		) {
-			$callback_failure_message = isset($wgOAuth2Client['configuration']['authz_failure_message'])
-				? $wgOAuth2Client['configuration']['authz_failure_message']
-				: 'Not authorized';
+			$callback_failure_message = $wgOAuth2Client['configuration']['authz_failure_message'] ?? 'Not authorized';
 			throw new MWException($callback_failure_message);
 		}
 
@@ -197,10 +195,9 @@ class SpecialOAuth2Client extends SpecialPage {
 		$user->setCookies();
 		$this->getContext()->setUser( $user );
 		$user->saveSettings();
-        RequestContext::getMain()->setUser( $user );
+		RequestContext::getMain()->setUser( $user );
 		$sessionUser = User::newFromSession($this->getRequest());
 		$sessionUser->load();
 		return $user;
 	}
-
 }
