@@ -1,5 +1,5 @@
 # MediaWiki OAuth2 Client
-MediaWiki implementation of the PHP League's [OAuth2 Client](https://github.com/thephpleague/oauth2-client), to allow MediaWiki to act as a client to any OAuth2 server. Currently maintained by [Schine GmbH](https://www.star-made.org/).
+MediaWiki implementation of the PHP League's [OAuth2 Client](https://github.com/thephpleague/oauth2-client), to allow MediaWiki to act as a client to any OAuth2 server. Customized for the needs of https://wiki.inventaire.io
 
 Requires MediaWiki 1.25+.
 
